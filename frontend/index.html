@@ -14,27 +14,19 @@
 <body>
     <div class="hangman">   
         <h1 class="mainTitle">Hangman</h1>
-        <div class="guesses">Wrong guesses: <span class="wrongGuesses">0</span> of <span class="totalWrongGuesses">10</span></div>
-        <div id="timer">
-            <p class="clock"></p>
-        </div>
+        <div class="guesses">Wrong guesses: <span class="wrongGuesses">0</span> of <span id="maxWrongGuesses"></span></div>
         <div class="game">
-            <p class="hmpics"></p>
+            <img src="../hangman.imgs" alt="" id="hangmanimg">
             <p>What is this word?</p>
             <p class="mysteryWord"></p>
             <div class="keyboard">   
             </div>
-            <p class="reset"></p>
+        </div>
+         <div id="timer">
+            <label id="minutes">00</label> minute(s) and <label id="seconds">00</label> second(s) 
          </div>
-         <div id="scoreboard">
-
-
-         </div>
-         <div id="car-list">
-
-
-         </div>
-
+         <button id="reset">Reset</button> 
+         <br>
     </div>
 </body>
 </html>
