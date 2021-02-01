@@ -16,7 +16,7 @@
         <h1 class="mainTitle">Hangman</h1>
         <div class="guesses">Wrong guesses: <span class="wrongGuesses">0</span> of <span id="maxWrongGuesses"></span></div>
         <div class="game">
-            <img src="../hangman.imgs" alt="" id="hangmanimg">
+            <img src="hangman.imgs/0.jpg" id="hangmanimg">
             <p>What is this word?</p>
             <p class="mysteryWord"></p>
             <div class="keyboard">   
@@ -27,6 +27,12 @@
          </div>
          <button id="reset">Reset</button> 
          <br>
+         <br>
+         <form id = winForm>You won!! Your score is <span id="yourScore"></span>
+            <label for="name">Your Name:</label>
+            <input type="text">
+            <input type="submit">
+         </form>
     </div>
 </body>
 </html>

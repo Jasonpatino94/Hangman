@@ -16,7 +16,7 @@ const keyboard = document.getElementsByClassName('keyboard')[0]
 
 
 // gives you the max number of wrong guesses
-maxWrongGuesses.innerHTML = 5
+maxWrongGuesses.innerHTML = 10
 
 
 // resets the timer and gives you a new word
@@ -28,9 +28,12 @@ reset.addEventListener("click" , e => {
     
     randomVehicle()
     guessWord()
+    updatePicture()
     
     buttons = document.querySelectorAll(".letter")
     Array.from(buttons).map( button => button.disabled = false)
+    document.getElementById('winForm').style.display = "none"
+    document.getElementsByClassName('keyboard')[0].style.display = "block"
 })
 
 // picks a random word to guess and replaces each character with underscores
@@ -39,17 +42,17 @@ function randomVehicle(){
 }
 
 // create keyboard
-function createButtons(){
-    const buttons = document.createElement('ul')
+    function createButtons(){
+        const buttons = document.createElement('ul')
    
-    for (let i = 0; i < keys.length; i++) {
-        const button = document.createElement('button')
-        // button.dataset.letter = keys[i]
-        button.className = `letter`
-        button.innerHTML = keys[i]
-        keyboard.appendChild(buttons)
-        buttons.appendChild(button)
-        button.addEventListener("click", () => makeGuess(button) )
+        for (let i = 0; i < keys.length; i++) {
+            const button = document.createElement('button')
+            // button.dataset.letter = keys[i]
+            button.className = `letter`
+            button.innerHTML = keys[i]
+            keyboard.appendChild(buttons)
+            buttons.appendChild(button)
+            button.addEventListener("click", () => makeGuess(button) )
         }
     }
     
@@ -66,17 +69,20 @@ function createButtons(){
         const character = button.innerHTML
         guessedLetters.indexOf(character) === -1 ? guessedLetters.push(character) : null
         button.setAttribute('disabled', true)
-        const charIndex = answer.indexOf(button.innerHTML)
-        if (charIndex >= 0){
+        let charIndex = answer.indexOf(button.innerHTML)
+        if (charIndex === -1) {
+            mistakes++
+            numberGuessedWrong()
+            youLose()
+            updatePicture()
+        } 
+        while (charIndex >= 0){
             const splitWord = wordToGuess.split(" ")
             splitWord[charIndex] = button.innerHTML
             wordToGuess = splitWord.join(" ")
             document.getElementsByClassName('mysteryWord')[0].innerHTML = wordToGuess
+            charIndex = answer.indexOf(button.innerHTML, charIndex + 1)
             youWin()
-        } else if (charIndex === -1) {
-            mistakes++
-            numberGuessedWrong()
-            youLose()
         }
         console.log(wordToGuess)
         console.log(answer)
@@ -98,7 +104,9 @@ function createButtons(){
     // if you guess all the letters correctly, you will win
     function youWin(){
         if (wordToGuess === answer.split('').join(' ')){
-            alert(`you won in ${minutes.innerHTML} minutes and ${seconds.innerHTML} seconds!!`)
+            document.getElementById('winForm').style.display = "block"
+            document.getElementById("yourScore").innerHTML = `${totalSeconds}`
+            document.getElementsByClassName('keyboard')[0].style.display = "none"
         }
     }                    
 
@@ -108,8 +116,12 @@ function createButtons(){
         if (wrongGuesses.innerHTML === maxWrongGuesses.innerHTML) {
         //    disable all buttons and put down that you lost.
         document.getElementsByClassName('mysteryWord')[0].innerHTML = `you lost, the correct answer is <span >${answer}</span>`
-            
+        document.getElementsByClassName('keyboard')[0].style.display = "none"
         }
+    }
+
+    function updatePicture(){
+        document.getElementById('hangmanimg').src = `hangman.imgs/${mistakes}.jpg`
     }
      
 randomVehicle();
@@ -119,10 +131,10 @@ setInterval(setTime, 1000);
 
 
 
-// make each image pop up for each mistake
-// mulitple letters have to pop up for each mistake
-// have to disable all buttons when you win or lose
-// resets image when you reset the game
+
+
+
+
 // modal all vehicles in the list
 // modal the scoreboard
 // 
