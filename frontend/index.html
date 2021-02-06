@@ -7,6 +7,7 @@
     <!-- bootstrap 4 CDN  -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="hangman.css">
+    <script defer src="./Classes/api.js"></script>
     <script defer src="./Classes/game.js"></script>
     <script defer src= "hangman.js"></script>
     
@@ -34,6 +35,34 @@
             <input type="text">
             <input type="submit">
          </form>
+         
+         <button id="vehiclebtn">Word List</button>
+        
+         <div id="vehiclesList" class="modal" >
+             <div id="vehicleListModal" class="modalContent">
+                 <header>Vehicles!!</header>
+                 <span class="closebutton">&times;</span>
+                 <ul id="vehicles">
+                </ul>
+                <form id="addVehicleForm">New Vehicle: <br>
+                    <label for="kind">Type:</label>
+                    <input type="text"><br>
+                    <label for="name">Name:</label>
+                    <input type="text">
+                    <input type="submit">
+                </form>
+            </div>
+         </div>
+         
+         <button id="scorelistbtn">View all Scores</button>
+         <div id="scorelist" class="modal">
+             <div id= scoreListModal class="modalContent">
+                 <header>ScoreBoard!! </header>
+                <span class="closebutton">&times;</span>
+                 <ol id="scores">   
+                 </ol>
+            </div>
+         </div>
     </div>
 </body>
 </html>

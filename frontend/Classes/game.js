@@ -5,20 +5,22 @@ class Game {
         this.guessedLetters = []
         this.totalSeconds = 0
         this.mistakes = 0
-        this.vehicles = ["accord", "corolla", "civic", "versa", "maxima", "titan", "highlander", "bronco", "mustang"]
-
-
+        this.vehicles = []
+        
         this.createButtons();
-        this.randomVehicle();
-        this.guessWord();
-        setInterval(this.setTime, 1000)
-
-        reset.addEventListener("click" , this.reset)
+        setInterval(this.setTime, 1000);
+        
+        reset.addEventListener("click" , this.reset);
+        
+        api.fetchVehicles().then(this.randomVehicle);
     }
-
-    randomVehicle(){
-        this.answer = this.vehicles[Math.floor(Math.random() * this.vehicles.length)]      
+    
+    randomVehicle = data => {
+        this.vehicles = data
+        this.answer = this.vehicles[Math.floor(Math.random() * this.vehicles.length)].name
+        this.guessWord()
     }
+    
     
     setTime = () => {
         this.totalSeconds++
@@ -54,15 +56,15 @@ class Game {
         game.guessedLetters = []
         game.mistakes = 0
         wrongGuesses.innerHTML = game.mistakes
-        
-        game.randomVehicle()
-        game.guessWord()
+        api.fetchVehicles().then(game.randomVehicle);
         game.updatePicture()
         
         game.buttons = document.querySelectorAll(".letter")
         Array.from(game.buttons).map( button => button.disabled = false)
         document.getElementById('winForm').style.display = "none"
         document.getElementsByClassName('keyboard')[0].style.display = "block"
+    
+    
     }
 
     updatePicture(){
@@ -113,7 +115,6 @@ class Game {
     numberGuessedWrong(){
         wrongGuesses.innerHTML = this.mistakes
     }
-
-
+        
 
 }
