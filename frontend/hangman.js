@@ -44,6 +44,8 @@ function submitScore(e){
         }
     }
     api.postUsersScoresURL(newScore)
+    e.target.remove()
+
 }
 
 function addVehicle(e){
@@ -54,6 +56,7 @@ function addVehicle(e){
     }
 
     api.createVehicle(newVehicle)
+    e.target.remove()
 }
 
 function getAllVehicles() {
@@ -77,7 +80,7 @@ function displayScores(data){
     scores = data
     scores.forEach(score => {
         let newScore = document.createElement('li')
-        newScore.innerHTML = `<span class"scoreboardname">${score.player.name}</span> with <span class="scoreboardscore">${score.points}</span>`
+        newScore.innerHTML = `<span class"scoreboardname">${score.player.name}</span> with <span class="scoreboardscore">${score.points}</span> points!`
         scoreList.appendChild(newScore) 
     })
 }
