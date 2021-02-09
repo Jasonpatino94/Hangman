@@ -8,6 +8,7 @@ let reset = document.getElementById('reset')
 let wrongGuesses = document.getElementsByClassName('wrongGuesses')[0]
 let maxWrongGuesses = document.getElementById("maxWrongGuesses")
 maxWrongGuesses.innerHTML = 10
+let newInt = []
 
 
 let vehiclesList = document.getElementById('vehicles')
@@ -19,6 +20,7 @@ let scoreModal = document.getElementById('scorelist')
 let scoreList = document.getElementById("scores")
 let addVehicleform = document.getElementById('addVehicleForm')
 let addScoreForm = document.getElementById('winForm')
+let reorder = document.getElementById('reorder')
 
 
 // EVENT LISTENERS
@@ -28,6 +30,7 @@ scoresBtn.addEventListener("click", openScoreList)
 vehicleBtn.addEventListener('click', openVehicleList)
 closebuttons[1].addEventListener('click', closeModal)
 addScoreForm.addEventListener('submit', submitScore)
+reorder.addEventListener('click', getOrderedList)
 
 
 const api = new API
@@ -104,6 +107,34 @@ function closeModal(){
     scoreModal.style.display = "none"
 }
 
+
+function getOrderedList(){
+    api.fetchScores().then(orderList)
+}
+
+function orderList(data){
+    let newList = data
+    newList.sort(function (a,b) {
+        return b.points - a.points
+        })
+        scoreList.innerHTML = ""
+        newList.forEach(score => {
+            let newScore = document.createElement('li')
+            newScore.innerHTML = `<span class"scoreboardname">${score.player.name}</span> with <span class="scoreboardscore">${score.points}</span> points!`
+            scoreList.appendChild(newScore)
+        })
+}
+
+
+
+// function reverseOrderList(){
+//     let scores = Array.from(document.querySelectorAll('.scoreboardscore'))
+//     for (let i = 0; i < scores.length; i++) {
+//         newNum = parseInt(scores[i].innerText)
+//         newInt.push(newNum)
+//     }
+//     debugger
+// }
 
 
 
